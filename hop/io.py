@@ -338,6 +338,8 @@ class Consumer:
         """
         logger.info("processing messages from stream")
         for message in self._consumer.stream(autocommit=autocommit, **kwargs):
+            if not message:
+                break
             if self.ignoretest and self.is_test(message):
                 continue
             yield self._unpack(message, metadata=metadata)
